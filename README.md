@@ -1,2 +1,2 @@
  <h1>Expense Tracker: A .NET Core MVC 2022 Application with Syncfusion Data Visualization.</h1>
- elio
+ <h5>Expense Tracker is a web application that allows you to track your income and expenses in an easy and intuitive way. You can add, edit, and delete transactions and view summary reports and charts of your financial data. Expense Tracker is built with .NET Core MVC 2022, a cross-platform framework for building modern web applications, and Syncfusion, a UI component library that offers rich data visualization features.</h5>
