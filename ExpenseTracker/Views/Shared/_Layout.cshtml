@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ExpenseTracker</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+  @* <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/20.3.47/material.css" />  *@ 
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+  <link href="https://cdn.syncfusion.com/ej2/20.3.47/bootstrap5-dark.css" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+  
+  @*ICON*@
+  <link href="~/Wallet-icon.ico" rel="icon" type="image/x-icon" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ExpenseTracker.styles.css" asp-append-version="true" />
+
+    <script src="https://cdn.syncfusion.com/ej2/20.3.47/dist/ej2.min.js"></script>
+</head>
+<body  class="e-bigger">
+
+
+    <partial name="SideBar" />
+
+    <header class="fixed-top text-muted" style="background-color:#fafafa">
+   
+ <div class="container-fluid">
+  <div class="row justify-content-end" style="margin-top: 10px; margin-right: 10px;">
+            
+        <div class="col-md-6">
+      <div class="d-flex">
+          @if (ViewBag.IsCategories != null)
+            {
+                <select class="category-type">
+                    <option value="All">Filter</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+            }
+          @*<form  class="d-flex form-inline" asp-page="/Transaction/Search" asp-route-returnUrl="@Url.Action("Search", "Transaction", new { })" method="post">*@
+          <form class="d-flex form-inline" asp-action="Index" asp-controller="Transaction" method="get">
+            <input class="form-control me-sm-2" type="text" name="query" placeholder="Search Transactions" style="border: none; border-radius: 20px; background-color: #dce7ef">
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="border: none; border-radius: 20px; background-color: #276678; color: white;">Search</button>
+          </form>
+            <partial name="_LoginPartial" />
+      </div>
+    </div>
+  </div>
+</div>
+
+    </header>
+
+    <div class="main-content pt-5">
+ 
+    <div class="container mt-5">
+        @*<div class="row justify-content-center">*@
+        <div class="row">
+            <div class="@(ViewData["isDashBoard"] == null ? "col-md-10" : "col-md-12")">
+
+                 <main role="main" class="pb-3">
+                        @if(ViewData["isDashBoard"] == null) 
+                        {
+                        <div class="row">
+                         <div class="col-md-7">
+                             <div class="d-flex flex-column mb-5">
+                                 <div class="d-flex mb-1">
+                                    <div class="flex-grow-1">
+                                 <h3 class="fw-bold">@ViewData["PageTitle"]</h3>
+                                    </div>
+                                 <div>
+                                    
+                                    @if(ViewData["PageActionText"] != null)
+                                    {
+                                        <a class="btn btn-dark" href="@ViewData["PageActionUrl"]">
+                                            @ViewData["PageActionText"]
+                                        </a>
+                                    }
+                                </div>
+                             </div>
+                             @*breadcrumb*@
+                             @*<ejs-breadcrumb id="breadcrumb" separatorTemplate="@Html.Raw("<span class='fa-solid fa-angle-right'></span>")"></ejs-breadcrumb>*@
+                                     </div> 
+                            
+                         </div>
+                     </div>
+                     }
+            @RenderBody()
+        </main>
+
+            </div>
+        </div>
+       
+    </div>
+
+     </div>
+    <footer class="border-top footer text-muted fixed-bottom bg-dark" style="">
+        <div class="container mb-3 ">
+            &copy; @DateTime.Now.Year Expense Tracker - All Rights Reserved
+        </div>
+    </footer>
+
+    <script>
+        $('.category-type').on('change', function(){
+            var selectedValue = $(this).val();
+            var redirectUrl = '@Url.Action("Index", "Category")';
+            var newUrl = redirectUrl + "?filter=" + selectedValue;
+            window.location.href = newUrl;
+        })
+    </script>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <ejs-scripts></ejs-scripts>
+</body>
+</html>
